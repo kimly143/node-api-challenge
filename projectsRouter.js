@@ -15,6 +15,12 @@ router.get('/:id', loadProject, (req, res) => {
 	res.json(req.project);
 });
 
+//UPDATE
+router.put('/:id', loadProject, validateProject, async (req, res) => {
+	const project = await db.update(req.project.id, req.body);
+	res.status(200).json(project);
+});
+
 // router.post('/:id/posts', (req, res) => {
 // 	// do your magic!
 // });
