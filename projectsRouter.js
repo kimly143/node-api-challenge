@@ -1,4 +1,5 @@
 const express = require('express');
+const { loadProject } = require("./sharedMiddleware")
 
 const router = express.Router();
 
@@ -35,23 +36,6 @@ router.get('/:id/actions', loadProject, async (req, res) => {
 
 //custom middleware
 
-//loadProject middleware
-async function loadProject(req, res, next) {
-	try {
-		const project = await db.get(req.params.id);
-		if (!project) {
-			return res.status(400).json({
-				message: 'invalid project id'
-			});
-		}
-		req.project = project;
-	} catch (e) {
-		return res.status(500).json({
-			error: 'The project information could not be retrieved.'
-		});
-	}
-	next();
-}
 
 //validateProject middleware
 function validateProject(req, res, next) {
