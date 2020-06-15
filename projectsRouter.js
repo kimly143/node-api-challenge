@@ -27,27 +27,11 @@ router.delete('/:id', loadProject, async (req, res) => {
 	res.status(200).end();
 });
 
-// router.post('/:id/posts', (req, res) => {
-// 	// do your magic!
-// });
-
-//passing middle ware to this handle only
-
-// router.get('/:id', validateUserId, (req, res) => {
-// 	res.json(req.user);
-// });
-
-// router.get('/:id/posts', validateUserId, (req, res) => {
-// 	const posts = userDb.getUserPosts(req.user.id);
-// });
-
-// router.delete('/:id', (req, res) => {
-// 	// do your magic!
-// });
-
-// router.put('/:id', (req, res) => {
-// 	// do your magic!
-// });
+//READ
+router.get('/:id/actions', loadProject, async (req, res) => {
+	const actions = await db.getProjectActions(req.project.id);
+	res.json(actions);
+});
 
 //custom middleware
 
@@ -86,19 +70,5 @@ function validateProject(req, res, next) {
 	}
 	next();
 }
-
-//validatePost middleware
-// async function validatePost(req, res, next) {
-// 	if (!req.body) {
-// 		return res.status(400).json({
-// 			message: 'missing post data'
-// 		});
-// 	} else if (!req.body.text) {
-// 		return res.status(400).json({
-// 			message: 'missing required text field'
-// 		});
-// 	}
-// 	next();
-// }
 
 module.exports = router;
