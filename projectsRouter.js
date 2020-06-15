@@ -21,6 +21,12 @@ router.put('/:id', loadProject, validateProject, async (req, res) => {
 	res.status(200).json(project);
 });
 
+//DELETE
+router.delete('/:id', loadProject, async (req, res) => {
+	await db.remove(req.project.id);
+	res.status(200).end();
+});
+
 // router.post('/:id/posts', (req, res) => {
 // 	// do your magic!
 // });
@@ -69,15 +75,15 @@ function validateProject(req, res, next) {
 		return res.status(400).json({
 			message: 'missing project data'
 		});
-	} else if (!req.body.name){
+	} else if (!req.body.name) {
 		return res.status(400).json({
 			message: 'missing required name field'
 		});
-	} else if (!req.body.description){
-        return res.status(400).json({
+	} else if (!req.body.description) {
+		return res.status(400).json({
 			message: 'missing required description field'
 		});
-    }
+	}
 	next();
 }
 
